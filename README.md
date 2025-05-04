@@ -23,3 +23,5 @@ Here is the summary of second iteration of CodeGen.
 - EntityManagerFactory.unwrap(Session.class) is discouraged in Hibernate 6.
 - Replaced deprecated `Session.getCriteriaBuilder()` with `EntityManager.getCriteriaBuilder()`
 - Replaced all usages of `Session` and `SessionFactory` with JPA-standard `EntityManager` injection.
+
+Note: See the commit for DocGen, CodeGen (both Iterations) to see the sequential migration.
