@@ -1,8 +1,3 @@
-/**
- * Implementation of the UserDao interface that uses Hibernate/JPA for database operations.
- * This class handles the actual database interactions for User-related operations.
- * The @Component annotation registers this class as a bean in Spring's application context.
- */
 package com.devglan.dao.impl;
 
 import java.util.List;
@@ -15,45 +10,50 @@ import org.springframework.stereotype.Component;
 import com.devglan.dao.UserDao;
 import com.devglan.model.UserDetails;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
-@Component
+/**
+ * Implementation of the UserDao interface that provides database operations for user details.
+ * This class uses Hibernate and JPA to interact with the database.
+ * (Migrated to use jakarta.persistence instead of javax.persistence)
+ */
+@Component  // Marks this class as a Spring component to be detected in component scanning
 public class UserDaoImpl implements UserDao {
 
-    /**
-     * Autowired EntityManagerFactory which provides access to JPA/Hibernate's persistence context.
-     * Spring Boot automatically configures and injects this factory based on application properties.
-     */
-	@Autowired
+	/**
+	 * EntityManagerFactory dependency injected by Spring.
+	 * Used to create EntityManager instances that provide persistence operations.
+	 */
+	@Autowired  // Enables dependency injection of the EntityManagerFactory
 	private EntityManagerFactory entityManagerFactory;
 
-    /**
-     * Retrieves all user details from the database using JPA Criteria API.
-     * This implementation uses the JPA Criteria API for type-safe queries.
-     * 
-     * @return A list of all UserDetails objects stored in the database
-     */
+	/**
+	 * Retrieves all user details from the database using Hibernate Criteria API.
+	 * 
+	 * @return List of UserDetails objects containing user information
+	 */
 	@Override
 	public List<UserDetails> getUserDetails() {
-		// Unwrap the EntityManagerFactory to get the Hibernate SessionFactory and open a new session
+		// Unwrap the JPA EntityManagerFactory to get Hibernate's SessionFactory
+		// and open a new Hibernate Session
 		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
 		
-		// Create a CriteriaBuilder which is used to construct criteria queries
+		// Create a CriteriaBuilder instance to build the query
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		
-		// Create a CriteriaQuery targeting the UserDetails entity
+		// Create a CriteriaQuery instance for the UserDetails class
 		CriteriaQuery criteria = builder.createQuery(UserDetails.class);
 		
-		// Define the root entity from which the query starts
+		// Define the root entity (FROM clause) for the query
 		Root contactRoot = criteria.from(UserDetails.class);
 		
-		// Select all attributes from the root entity
+		// Select the root entity (SELECT clause)
 		criteria.select(contactRoot);
 		
-		// Execute the query and return the result list
+		// Execute the query and return the results
 		return session.createQuery(criteria).getResultList();
 	}
 }

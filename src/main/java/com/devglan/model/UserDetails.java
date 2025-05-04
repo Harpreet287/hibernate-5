@@ -1,15 +1,16 @@
 package com.devglan.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * Entity class representing the user details in the system.
  * This class is mapped to the database table using JPA annotations.
+ * (Migrated to use jakarta.persistence instead of javax.persistence)
  */
 @Entity  // Marks this class as a JPA entity (a persistent domain object)
 @Table   // Specifies the primary table for this entity (uses class name as table name by default)

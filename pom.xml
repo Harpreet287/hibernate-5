@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Project Object Model (POM) file for Maven build configuration -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -17,9 +18,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <!-- Source and target Java version compatibility -->
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <!-- Updated Java version for Jakarta EE compatibility -->
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -32,13 +33,15 @@
     <properties>
         <!-- Main class to start the application -->
         <start-class>spring-boot-example.Application</start-class>
+        <!-- Specify Java version for Spring Boot 3.x -->
+        <java.version>17</java.version>
     </properties>
 
-    <!-- Parent POM configuration - inherits from Spring Boot starter parent -->
+    <!-- Parent POM configuration - updated to Spring Boot 3.x -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.1.RELEASE</version>  <!-- Spring Boot version -->
+        <version>3.1.0</version>  <!-- Updated Spring Boot version for Jakarta EE support -->
     </parent>
     
     <!-- Project dependencies -->
@@ -55,10 +58,11 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         
-        <!-- MySQL connector for database connectivity -->
+        <!-- MySQL connector for database connectivity - Updated version -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <!-- Version managed by Spring Boot -->
         </dependency>
         
         <!-- Spring Boot JPA starter - provides JPA with Hibernate -->
@@ -74,11 +78,19 @@
             </exclusions>
         </dependency>
         
+        <!-- Jakarta EE API - provides Jakarta EE specifications -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>9.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        
         <!-- Apache Commons Lang - utility methods for Java core classes -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.6</version>
+            <!-- Version managed by Spring Boot -->
         </dependency>
     </dependencies>
 </project>
