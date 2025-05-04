@@ -8,134 +8,90 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * Entity class representing the user details in the system.
- * This class is mapped to the database table using JPA annotations.
- * (Migrated to use jakarta.persistence instead of javax.persistence)
+ * Entity class representing user details in the system.
+ * Updated for Hibernate 6 compatibility.
  */
-@Entity  // Marks this class as a JPA entity (a persistent domain object)
-@Table   // Specifies the primary table for this entity (uses class name as table name by default)
+@Entity
+@Table(name = "userdetails")  // Explicitly specify table name
 public class UserDetails {
 
-	/**
-	 * Primary key of the user details entity.
-	 * The ID is automatically generated using auto-increment strategy.
-	 */
-	@Id  // Marks this field as the primary key
-	@Column  // Maps this field to a column in the database table
-	@GeneratedValue(strategy = GenerationType.IDENTITY)  // Specifies auto-increment generation strategy
-	private int id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	/**
-	 * First name of the user.
-	 */
-	@Column  // Maps this field to a column in the database table
-	private String firstName;
-	
-	/**
-	 * Last name of the user.
-	 */
-	@Column  // Maps this field to a column in the database table
-	private String lastName;
-	
-	/**
-	 * Email address of the user.
-	 */
-	@Column  // Maps this field to a column in the database table
-	private String email;
-	
-	/**
-	 * Password of the user.
-	 */
-	@Column  // Maps this field to a column in the database table
-	private String password;
+    @Column(name = "firstname")  // Explicitly specify column names
+    private String firstName;
+    
+    @Column(name = "lastname")
+    private String lastName;
+    
+    @Column(name = "email")
+    private String email;
+    
+    @Column(name = "password")
+    private String password;
 
-	/**
-	 * Gets the user's ID.
-	 * 
-	 * @return The user's ID
-	 */
-	public int getId() {
-		return id;
-	}
+    // Default constructor required by JPA
+    public UserDetails() {
+    }
+    
+    // Convenience constructor
+    public UserDetails(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 
-	/**
-	 * Sets the user's ID.
-	 * 
-	 * @param id The ID to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
 
-	/**
-	 * Gets the user's first name.
-	 * 
-	 * @return The user's first name
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	/**
-	 * Sets the user's first name.
-	 * 
-	 * @param firstName The first name to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	/**
-	 * Gets the user's last name.
-	 * 
-	 * @return The user's last name
-	 */
-	public String getLastName() {
-		return lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	/**
-	 * Sets the user's last name.
-	 * 
-	 * @param lastName The last name to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	/**
-	 * Gets the user's email address.
-	 * 
-	 * @return The user's email address
-	 */
-	public String getEmail() {
-		return email;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	/**
-	 * Sets the user's email address.
-	 * 
-	 * @param email The email address to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	/**
-	 * Gets the user's password.
-	 * 
-	 * @return The user's password
-	 */
-	public String getPassword() {
-		return password;
-	}
-	
-	/**
-	 * Sets the user's password.
-	 * 
-	 * @param password The password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    @Override
+    public String toString() {
+        return "UserDetails{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

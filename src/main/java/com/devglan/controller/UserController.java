@@ -1,8 +1,3 @@
-/**
- * Controller class that handles HTTP requests related to User operations.
- * This class acts as the entry point for user-related API endpoints.
- * The @Controller annotation marks this class as a Spring MVC controller.
- */
 package com.devglan.controller;
 
 import java.util.List;
@@ -10,34 +5,38 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.devglan.model.UserDetails;
 import com.devglan.service.UserService;
 
-@Controller
+/**
+ * REST controller class that handles HTTP requests related to User operations.
+ * Updated to use modern Spring annotations.
+ */
+@RestController  // Combined @Controller and @ResponseBody
 public class UserController {
-	
+    
+    private final UserService userService;
+    
     /**
-     * Autowired instance of UserService to handle business logic for user operations.
-     * Spring injects the appropriate implementation of UserService interface through dependency injection.
+     * Constructor injection for UserService
      */
-	@Autowired
-	private UserService userService;
-	
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+    
     /**
      * Handles HTTP GET requests to the "/list" endpoint.
-     * Retrieves a list of all user details from the service layer.
+     * Updated to use @GetMapping instead of @RequestMapping
      * 
-     * @return ResponseEntity containing a list of UserDetails objects and an HTTP status code
+     * @return ResponseEntity containing a list of UserDetails objects
      */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ResponseEntity<List<UserDetails>> userDetails() {
-        // Call the service layer to retrieve user details
-		List<UserDetails> userDetails = userService.getUserDetails();
-        // Return the user details with HTTP 200 OK status
-		return new ResponseEntity<List<UserDetails>>(userDetails, HttpStatus.OK);
-	}
+    @GetMapping("/list")
+    public ResponseEntity<List<UserDetails>> userDetails() {
+        List<UserDetails> userDetails = userService.getUserDetails();
+        return new ResponseEntity<>(userDetails, HttpStatus.OK);
+    }
 }
